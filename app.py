@@ -1,11 +1,19 @@
-import streamlit as st
+import importlib
+import importlib.util
 import joblib
 import string
-from nltk.corpus import stopwords
-from nltk.stem.porter import PorterStemmer
 import nltk
+from nltk.stem.porter import PorterStemmer
+
+streamlit_spec = importlib.util.find_spec("streamlit")
+if streamlit_spec is None:
+    raise ModuleNotFoundError("The Streamlit package is required to run this app. Install it with `pip install streamlit`.")
+
+st = importlib.import_module("streamlit")
 
 nltk.download('stopwords')
+
+stopwords = nltk.corpus.stopwords
 
 # Load the model and vectorizer
 model = joblib.load("spam_classifier_model.pkl")
